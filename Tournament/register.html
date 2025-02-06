@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Golden Ascent</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212; /* Dark Mode */
+      color: #e0e0e0; /* Light Text */
+    }
+
+    /* Header Section */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #1a1a1a;
+      color: white;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .header img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #f9c74f;
+    }
+
+    /* Tag Navigation Bar */
+    .nav-tags {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px 0;
+      background: #222;
+      margin-top: 70px;
+      scrollbar-width: thin;
+    }
+
+    .nav-tags::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .nav-tags::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 5px;
+    }
+
+    .nav-tags a {
+      flex: none;
+      padding: 12px 30px;
+      margin-right: 10px;
+      background: #333;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 25px;
+      text-align: center;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .nav-tags a:hover,
+    .nav-tags a.active {
+      background: #f9c74f;
+      color: black;
+      transform: scale(1.1);
+    }
+
+    /* Bottom Buttons */
+    .bottom-buttons {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+      background: #222;
+      z-index: 1000;
+    }
+
+    .bottom-buttons button {
+      flex: 1;
+      max-width: 150px;
+      padding: 10px;
+      font-size: 16px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .bottom-buttons button:hover {
+      background: #f9c74f;
+      color: black;
+    }
+
+    /* Content Section */
+    .content {
+      margin: 120px 20px 70px 20px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s;
+      background: #1a1a1a; /* Dark Mode Tab */
+      border-radius: 15px;
+      padding: 20px;
+      color: #e0e0e0; /* Light Text */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 20px;
+      }
+      .nav-tags a {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+      .bottom-buttons button {
+        font-size: 14px;
+        max-width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+      <h1>The Golden Ascent</h1>
+    </div>
+  </header>
+
+  <!-- Navigation Tags -->
+  <nav class="nav-tags">
+    <a href="#register" onclick="showTab('register')" class="active">Register</a>
+    <a href="#confirm" onclick="showTab('confirm')">Confirm Team List</a>
+    <a href="#rules" onclick="showTab('rules')">Rules</a>
+    <a href="#bracket" onclick="showTab('bracket')">Bracket</a>
+  </nav>
+
+  <!-- Content Section -->
+  <main class="content">
+    <section id="register" class="tab-content active">
+      <h2 class="text-xl font-bold text-center mb-6 text-gray-200">Please Register Your Team by Filling Out the Form Below</h2>
+      <form id="team-registration-form" class="registration-form p-8 bg-gray-800 shadow-lg rounded-lg space-y-6">
+        <div class="form-group">
+          <label for="team-name" class="block text-lg font-semibold mb-2 text-gray-300">Team Name</label>
+          <input type="text" id="team-name" name="teamName" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter your team name" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="team-logo" class="block text-lg font-semibold mb-2 text-gray-300">Team Logo</label>
+          <input type="file" id="team-logo" name="teamLogo" accept="image/*" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="contact-phone" class="block text-lg font-semibold mb-2 text-gray-300">Contact Phone</label>
+          <input type="tel" id="contact-phone" name="contactPhone" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter contact phone" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="player-ids" class="block text-lg font-semibold mb-2 text-gray-300">Player IDs</label>
+          <div id="player-ids" class="space-y-4">
+            <input type="text" id="player1-id" name="player1Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 1 ID" required>
+            <input type="text" id="player2-id" name="player2Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 2 ID" required>
+            <input type="text" id="player3-id" name="player3Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 3 ID" required>
+            <input type="text" id="player4-id" name="player4Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 4 ID" required>
+            <input type="text" id="player5-id" name="player5Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 5 ID" required>
+            <input type="text" id="player6-id" name="player6Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 6 ID Optional">
+            <input type="text" id="player7-id" name="player7Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 7 ID Optinal ">
+            <input type="text" id="player8-id" name="player8Id" class="form-control rounded-pill p-3 border border-gray-600 bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Player 8 ID Optinal ">
+          </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill mt-4">Register Team</button>
+      </form>
+    </section>
+  
+    <script>
+      // Firebase Initialization
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID",
+        databaseURL: "YOUR_DATABASE_URL"
+      };
+  
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+  
+      const form = document.getElementById('team-registration-form');
+  
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+  
+        const teamData = {
+          teamName: form.teamName.value,
+          contactPhone: form.contactPhone.value,
+          playerIDs: [
+            form.player1Id.value,
+            form.player2Id.value,
+            form.player3Id.value,
+            form.player4Id.value,
+            form.player5Id.value,
+            form.player6Id.value || null,
+            form.player7Id.value || null,
+            form.player8Id.value || null
+          ]
+        };
+  
+        // Upload Team Logo to Firebase Storage
+        const file = form.teamLogo.files[0];
+        const storageRef = firebase.storage().ref(`team-logos/${file.name}`);
+        const snapshot = await storageRef.put(file);
+        teamData.teamLogoUrl = await snapshot.ref.getDownloadURL();
+  
+        // Save Team Data to Firestore
+        db.collection('teams').add(teamData).then(() => {
+          alert('Team registered successfully!');
+          form.reset();
+        }).catch((error) => {
+          console.error('Error registering team:', error);
+          alert('An error occurred while registering the team.');
+        });
+      });
+    </script>
+  
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #1f2937;
+        padding: 20px;
+        color: #e5e7eb;
+      }
+  
+      .registration-form {
+        max-width: 700px;
+        margin: auto;
+        padding: 20px;
+        background-color: #374151;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+  
+      .form-group label {
+        font-weight: 600;
+        color: #d1d5db;
+      }
+  
+      .form-group input {
+        transition: border-color 0.3s, background-color 0.3s;
+      }
+  
+      .form-group input:focus {
+        border-color: #2563eb;
+        background-color: #4b5563;
+      }
+  
+      .btn-primary {
+        background: linear-gradient(to right, #2563eb, #1d4ed8);
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+  
+      .btn-primary:hover {
+        background: linear-gradient(to right, #1d4ed8, #2563eb);
+      }
+  
+      .btn {
+        margin-top: 10px;
+      }
+  
+      #player-ids .form-control {
+        margin-top: 10px;
+      }
+    </style>
+    <section id="confirm" class="tab-content">
+      <h2>Confirm Team List</h2>
+      <p>Confirm your team details and make sure everything is correct.</p>
+    </section>
+
+    <section id="rules" class="tab-content">
+      <h2>Rules</h2>
+      <p>Follow the tournament rules to avoid disqualifications.</p>
+    </section>
+
+    <section id="bracket" class="tab-content">
+      <h2>Bracket</h2>
+      <p>The tournament bracket will be updated here soon.</p>
+    </section>
+  </main>
+
+
+  <script>
+    // JavaScript for handling tab switching
+    function showTab(tabId) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      
+      // Remove active class from all nav links
+      document.querySelectorAll('.nav-tags a').forEach(tag => tag.classList.remove('active'));
+      
+      // Show the selected tab and mark the nav link as active
+      document.querySelector(`#${tabId}`).classList.add('active');
+      document.querySelector(`[href="#${tabId}"]`).classList.add('active');
+    }
+  </script>
+</body>
+</html>
